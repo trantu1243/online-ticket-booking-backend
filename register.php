@@ -2,11 +2,11 @@
 include 'config.php';
 include 'response/response.php';
 
-require 'vendor/autoload.php';
+// require 'vendor/autoload.php';
 
-use Firebase\JWT\JWT;
+// use Firebase\JWT\JWT;
 
-$key = "online ticket booking";
+// $key = "online ticket booking";
 
 // Lấy dữ liệu từ frontend
 $username = $_POST['username'];
@@ -57,19 +57,19 @@ if ($password != $cfPassword){
     $stmt->bind_param("sssi", $username, $hashed_password, $email, $userType);
     if ($stmt->execute()) {
         // Đăng ký thành công
-        $issuedAt = time();
-        $expirationTime = $issuedAt + (30 * 24 * 60 * 60);
-        $user_id = $stmt->insert_id;
-        $payload = array(
-            'iat' => $issuedAt,
-            'exp' => $expirationTime,
-            'uid' => $user_id
-        );
-        $jwt = JWT::encode($payload, $key, 'HS256');
+//        $issuedAt = time();
+//        $expirationTime = $issuedAt + (30 * 24 * 60 * 60);
+//        $user_id = $stmt->insert_id;
+//        $payload = array(
+//            'iat' => $issuedAt,
+//            'exp' => $expirationTime,
+//            'uid' => $user_id
+//        );
+//        $jwt = JWT::encode($payload, $key, 'HS256');
         generateResponse(array(
             "message" => "Ok",
-            "username" => $username,
-            "token" => $jwt,
+//            "username" => $username,
+//            "token" => $jwt,
         ));
     } else {
         generateResponse(array(
