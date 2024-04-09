@@ -1,11 +1,11 @@
 <?php
-require_once '../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 function verifyToken($token) {
-    include '../config.php';
+    include 'config.php';
 
     $key = "online ticket booking";
     try {
