@@ -32,8 +32,8 @@ if(isset($authorizationHeader) && $authorizationHeader != "") {
             $imagePath = $uploadDir . $imageName;
             if (move_uploaded_file($poster['tmp_name'], $posterPath) && move_uploaded_file($image['tmp_name'], $imagePath)) {
 
-                $posPath = '/images/' . $posterName;
-                $imgPath = '/images' . $imageName;
+                $posPath = 'http://localhost/online-ticket-booking/images/' . $posterName;
+                $imgPath = 'http://localhost/online-ticket-booking/images' . $imageName;
                 $stmt2 = $conn->prepare("INSERT INTO Movies (name, description, releaseDate, duration, genre, poster, image, videoUrl, tomatoPoint) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $stmt2->bind_param("sssissssi", $name, $description, $releaseDate, $duration, $genre, $posPath, $imgPath, $videoUrl, $tomatoPoint);
                 if ($stmt2->execute()){

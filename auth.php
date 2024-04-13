@@ -1,9 +1,11 @@
 <?php
-include 'authentication/jwtAuthentication.php';
+include 'jwtAuthentication.php';
 include 'response/response.php';
 
 $headers = apache_request_headers();
-$authorizationHeader = $headers['Authorization'];
+
+if ($headers['Authorization']) $authorizationHeader = $headers['Authorization'];
+else $authorizationHeader = '';
 
 if(isset($authorizationHeader) && $authorizationHeader != "") {
     $token = explode(" ", $authorizationHeader)[1];

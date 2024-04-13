@@ -82,7 +82,7 @@ ALTER TABLE Shows AUTO_INCREMENT = 100000000;
 CREATE TABLE IF NOT EXISTS `Seats` (
   `seatId` INT PRIMARY KEY AUTO_INCREMENT,
   `showId` INT,
-  `seatName` VARCHAR(2),
+  `seatName` VARCHAR(5),
   `avaible` INT(1)
 );
 
