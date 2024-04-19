@@ -23,7 +23,14 @@ function verifyToken($token) {
             'userId' => $user['userId'],
             'username' => $user['username'],
             'email' => $user['email'],
-            'userType' => $user['userType']
+            'userType' => $user['userType'],
+            'name' => $user['name'],
+            'phoneNumber' => $user['phoneNumber'],
+            'cccd' => $user['cccd'],
+            'sex' => $user['sex'],
+            'birthday' => $user['birthday'],
+            'address' => $user['address']
+
         );; // Trả về user_id nếu token hợp lệ
     } catch (Exception $e) {
         

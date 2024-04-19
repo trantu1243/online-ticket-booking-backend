@@ -7,6 +7,12 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(500) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
+  `name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `phoneNumber` VARCHAR(20),
+  `cccd` VARCHAR(20),
+  `birthday` DATE,
+  `sex` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `address` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `userType` INT(1) NOT NULL
 );
 
