@@ -17,15 +17,15 @@ if(isset($authorizationHeader) && $authorizationHeader != "")
         $state = $_GET['state'];
         $date = $_GET['date'];
         $theaterId = $_GET['theaterId'];
-    
+        $currentDate = date('Y-m-d');
 
         if ($state == '' && $date == '' && $theaterId == ''){
-            $stmt = $conn->prepare("SELECT DISTINCT Theaters.state
-                                    FROM Shows
-                                    JOIN Screens ON Shows.screenId = Screens.screenId
-                                    JOIN Theaters ON Screens.theaterID = Theaters.theaterID
-                                    WHERE Shows.movieID = ?");
-            $stmt->bind_param("i", $id);
+            $stmt = $conn->prepare("SELECT DISTINCT t.state
+                                    FROM Shows s
+                                    INNER JOIN Screens sc ON s.screenId = sc.screenId
+                                    INNER JOIN Theaters t ON sc.theaterID = t.theaterID
+                                    WHERE s.movieID = ? AND s.showDate >= ?");
+            $stmt->bind_param("is", $id, $currentDate);
             $stmt->execute();
             $result = $stmt->get_result();
             $rows = array();
@@ -45,12 +45,12 @@ if(isset($authorizationHeader) && $authorizationHeader != "")
             $stmt->close();
             $conn->close();
         } else if ($date == '' && $theaterId == ''){
-            $stmt = $conn->prepare("SELECT DISTINCT Shows.showDate
-                                    FROM Shows
-                                    JOIN Screens ON Shows.screenId = Screens.screenId
-                                    JOIN Theaters ON Screens.theaterID = Theaters.theaterID
-                                    WHERE Theaters.state = ? AND Shows.movieID = ?");
-            $stmt->bind_param("si", $state,$id);
+            $stmt = $conn->prepare("SELECT DISTINCT s.showDate
+                                    FROM Shows s
+                                    INNER JOIN Screens sc ON s.screenId = sc.screenId
+                                    INNER JOIN Theaters t ON sc.theaterID = t.theaterID
+                                    WHERE t.state = ? AND s.movieID = ? AND s.showDate >= ?");
+            $stmt->bind_param("sis", $state, $id, $currentDate);
             $stmt->execute();
             $result = $stmt->get_result();
             $rows = array();
