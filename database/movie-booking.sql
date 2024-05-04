@@ -23,9 +23,9 @@ ALTER TABLE Users AUTO_INCREMENT = 100000000;
 --  user1234 | 123456
 
 INSERT INTO Users (username, password, email, userType) VALUES
-("admin", "$2y$10$F6knkmFQ5QtxIlL/LHRCselsiq2JfTrag5llnMebxz7Xn968KPTvS", "admin@gmail.com", 0),
-("threater1", "$2y$10$F6knkmFQ5QtxIlL/LHRCselsiq2JfTrag5llnMebxz7Xn968KPTvS", "threater1@gmail.com", 1),
-("threater2", "$2y$10$F6knkmFQ5QtxIlL/LHRCselsiq2JfTrag5llnMebxz7Xn968KPTvS", "threater1@gmail.com", 1),
+("admin", "$2y$10$4NUdOlq/gpkBAP0Ld3UoNeKCArlARvqWRFOjApVPt9/bhdAlLp1pi", "admin@gmail.com", 0),
+("threater1", "$2y$10$4NUdOlq/gpkBAP0Ld3UoNeKCArlARvqWRFOjApVPt9/bhdAlLp1pi", "threater1@gmail.com", 1),
+("threater2", "$2y$10$4NUdOlq/gpkBAP0Ld3UoNeKCArlARvqWRFOjApVPt9/bhdAlLp1pi", "threater1@gmail.com", 1),
 ("user1234", "$2y$10$4NUdOlq/gpkBAP0Ld3UoNeKCArlARvqWRFOjApVPt9/bhdAlLp1pi", "user1@gmail.com", 2);
 
 CREATE TABLE IF NOT EXISTS `Movies` (

@@ -10,9 +10,26 @@ if(isset($authorizationHeader) && $authorizationHeader != "") {
     $token = explode(" ", $authorizationHeader)[1];
     $user = verifyToken($token);
     if ($user['userType'] == 0) {
-        $stmt = $conn->prepare("SELECT Theaters.*, Users.username
-                                FROM Theaters
-                                INNER JOIN Users ON Theaters.userId = Users.userId;");
+        $stmt = $conn->prepare("SELECT 
+                            th.theaterID,
+                            th.name AS name,
+                            th.state AS state,
+                            th.address AS address,
+                            th.zipCode AS zipCode,
+                            u.username,
+                            SUM(t.charge) AS totalCharge
+                        FROM
+                            Theaters th
+                                LEFT JOIN
+                            Users u ON th.userId = u.userId
+                                LEFT JOIN
+                            Screens s ON th.theaterID = s.theaterID
+                                LEFT JOIN
+                            Shows sh ON s.screenId = sh.screenId
+                                LEFT JOIN
+                            Tickets t ON sh.showId = t.showId
+                        GROUP BY th.theaterID
+                        ORDER BY th.theaterID;");
         $stmt->execute();
         $result = $stmt->get_result();
 

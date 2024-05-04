@@ -19,24 +19,24 @@ if(isset($authorizationHeader) && $authorizationHeader != "") {
         $stmt->close();
         
         $stmt = $conn->prepare("SELECT 
-                                    m.movieID,
-                                    m.name AS movieName,
-                                    SUM(t.charge) AS totalCharge,
-                                    SUM(t.charge / s.charge) AS number
-                                FROM
-                                    Movies m
-                                        INNER JOIN
-                                    Shows sh ON m.movieID = sh.movieID
-                                        INNER JOIN
-                                    Screens s ON sh.screenId = s.screenId
-                                        INNER JOIN
-                                    Theaters th ON s.theaterID = th.theaterID
-                                        LEFT JOIN
-                                    Tickets t ON sh.showId = t.showId
-                                WHERE
-                                    th.theaterID = ?
-                                GROUP BY
-                                    m.movieID, m.name;");
+                m.movieID,
+                m.name AS movieName,
+                SUM(t.charge) AS totalCharge,
+                SUM(t.charge / s.charge) AS number
+            FROM
+                Movies m
+                    INNER JOIN
+                Shows sh ON m.movieID = sh.movieID
+                    INNER JOIN
+                Screens s ON sh.screenId = s.screenId
+                    INNER JOIN
+                Theaters th ON s.theaterID = th.theaterID
+                    LEFT JOIN
+                Tickets t ON sh.showId = t.showId
+            WHERE
+                th.theaterID = ?
+            GROUP BY
+                m.movieID, m.name;");
         $stmt->bind_param('i', $theaterId);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -46,9 +46,29 @@ if(isset($authorizationHeader) && $authorizationHeader != "") {
         while ($row = $result->fetch_assoc()) {
             $rows[] = $row;
         }
+
+        $stmt = $conn->prepare("SELECT 
+    SUM(t.charge) AS totalCharge
+FROM
+    Tickets t
+        INNER JOIN
+    Shows sh ON t.showId = sh.showId
+        INNER JOIN
+    Screens s ON sh.screenId = s.screenId
+        INNER JOIN
+    Theaters th ON s.theaterID = th.theaterID
+WHERE
+    th.theaterID = ?;");
+        $stmt->bind_param('i', $theaterId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $total = $result->fetch_assoc();
+        $stmt->close();
+
         generateResponse(array(
                     "message" => "Ok",
-                    "statistic" => $rows
+                    "statistic" => $rows,
+                    "total" => $total
                 ));
     } else generateResponse(array("message" => "Error"));
 } else {
